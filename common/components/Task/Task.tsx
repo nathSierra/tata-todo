@@ -1,16 +1,24 @@
 import React from 'react'
 
 export type Itask = {
+    id: string;
     name: string;
     description?: string;
     difficulty: number;
 }
 
-export const Task = (props: Itask) => {
-    const {name, description, difficulty} = props;
+export type Iprops = {
+  task: Itask;
+  setSelectedTask: (task: Itask) => void;
+}
+
+export const Task = (props: Iprops) => {
+    const {task, setSelectedTask} = props;
+    const {name, difficulty, id} = task;
     return (
         <li>
-            {name} | {difficulty}
+            {name} | {difficulty} | {id}
+            <button onClick={(_) => setSelectedTask(task)}>Edit</button>
         </li>
     )
 }

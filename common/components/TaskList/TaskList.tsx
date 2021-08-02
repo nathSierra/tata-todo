@@ -3,18 +3,20 @@ import { Task, Itask } from '../Task/Task'
 
 
 type Iprops = {
-    tasks: Itask[]
+    tasks: Itask[];
+    setSelectedTask: (task: Itask) => void;
 }
 
 
 export const TaskList = (props: Iprops) => {
-    const {tasks} = props;
+    const {tasks, setSelectedTask} = props;
     if (tasks.length === 0) <> No Tasks! </>
     return (
 
        <>
        <ul>
-           {tasks.map((task: Itask) => <Task key={task.name} {...task} />)}
+           {tasks.map((task: Itask) => <Task key={task.name} task={task} setSelectedTask={setSelectedTask}/>)}
+
        </ul>
        </>
     )
