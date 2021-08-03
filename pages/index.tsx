@@ -5,39 +5,53 @@ import { TaskList } from '../common/components/TaskList/TaskList'
 import { Itask } from '../common/components/Task/Task'
 import { useState, useEffect } from 'react'
 import TaskForm, { initialTask } from '../common/components/TaskForm/TaskForm'
+import { v4 as uuidv4 } from 'uuid';
+import { keyBy } from 'lodash'
+
+
 
   const tasks= [
   {
     id: '1',
     name: 'Complete App',
     difficulty: 7,
+    isCompleted: false,
   },
     {
     id: '2',
     name: 'Clean cat box',
     difficulty: 1,
+    isCompleted: false,
   },
     {
     id: '3',
     name: 'Take out trash',
     difficulty: 2,
+    isCompleted: false,
   },
     {
     id: '4',
     name: 'Become Veteran Rank',
     difficulty: 4,
+    isCompleted: false,
   },
 ]
 
 
 export default function Home() {
-  const [taskList, setTaskList] = useState(tasks);
+  const [taskListByID, setTaskListByID] = useState(keyBy(tasks, 'id'));
   const [selectedTask, setSelectedTask] = useState(initialTask);
 
-  // useEffect(() => {alert(selectedTask.name)},[selectedTask])
-
   const saveTask = (task: Itask) => {
-    setTaskList([...taskList, task])
+    const id = task?.id || uuidv4();
+
+    setTaskListByID({...taskListByID, [id]:task})
+
+  }
+
+  const deleteTask = (id: string) => {
+    const {[id]: deletedTask, ...tasksByID} = taskListByID;
+    setTaskListByID(tasksByID)
   }
 
   return (
@@ -53,7 +67,7 @@ export default function Home() {
           Welcome to Tata Todo
         </h1>
         <TaskForm task={selectedTask} saveTask={saveTask}/>
-        <TaskList setSelectedTask={setSelectedTask} tasks={taskList} />
+        <TaskList setSelectedTask={setSelectedTask} onDelete={deleteTask} tasks={Object.values(taskListByID)} />
       </main>
 
       <footer className={styles.footer}>

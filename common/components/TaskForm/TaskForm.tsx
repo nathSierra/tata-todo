@@ -8,7 +8,7 @@ type Iprops = {
     saveTask: (task: Itask) => void;
 }
 
-export const initialTask: Itask = {name: '', difficulty: 0, id: ''};
+export const initialTask: Itask = {name: '', difficulty: 0, id: '', isCompleted: false};
 
 export default function TaskForm(props: Iprops) {
     const {task, saveTask} = props;
@@ -18,8 +18,7 @@ export default function TaskForm(props: Iprops) {
        enableReinitialize
        initialValues={task || initialTask}
        onSubmit={(values, { setSubmitting }) => {
-           const id = uuidv4();
-           saveTask({...values, id})
+           saveTask(values)
          setTimeout(() => {
            alert(JSON.stringify(values, null, 2));
            setSubmitting(false);
