@@ -5,7 +5,7 @@ import { Task, Itask } from '../Task/Task'
 type Iprops = {
     tasks: Itask[];
     setSelectedTask: (task: Itask) => void;
-    onDelete: (id: string) => void;
+    onDelete: (id: number) => void;
 }
 
 

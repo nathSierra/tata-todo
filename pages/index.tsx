@@ -12,25 +12,25 @@ import axios from 'axios';
 
   const tasks= [
   {
-    id: '1',
+    id: 1,
     name: 'Complete App',
     difficulty: 7,
     isCompleted: false,
   },
     {
-    id: '2',
+    id: 2,
     name: 'Clean cat box',
     difficulty: 1,
     isCompleted: false,
   },
     {
-    id: '3',
+    id: 3,
     name: 'Take out trash',
     difficulty: 2,
     isCompleted: false,
   },
     {
-    id: '4',
+    id: 4,
     name: 'Become Veteran Rank',
     difficulty: 4,
     isCompleted: false,
@@ -59,8 +59,9 @@ export default function Home() {
   const saveTask = (task: Itask) => {
         const postTask = async ()=> {
       try{
-      const result = await axios.post(TASK, {...task, id: '4'});
-      setTaskListByID({...taskListByID, [result.data.id]:task})
+      const result = await axios.post(TASK, task);
+      console.info(result);
+      setTaskListByID({...taskListByID, [result.data.id]: {...task, id: result.data.id }})
       }
       catch(e) {
         console.info(e);
@@ -69,7 +70,7 @@ export default function Home() {
     postTask();
   }
 
-  const deleteTask = (id: string) => {
+  const deleteTask = (id: number) => {
     const {[id]: deletedTask, ...tasksByID} = taskListByID;
     setTaskListByID(tasksByID)
   }

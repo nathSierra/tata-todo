@@ -1,3 +1,3 @@
 export type IbaseObject = {
-    id: string;
+    id: number;
 }

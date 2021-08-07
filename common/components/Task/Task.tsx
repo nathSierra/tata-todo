@@ -11,7 +11,7 @@ export interface Itask extends IbaseObject {
 export type Iprops = {
   task: Itask;
   setSelectedTask: (task: Itask) => void;
-  onDelete: (id: string) => void;
+  onDelete: (id: number) => void;
 }
 
 export const Task = (props: Iprops) => {

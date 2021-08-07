@@ -1,7 +1,6 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Itask } from "../Task/Task";
-import { v4 as uuidv4 } from 'uuid';
 
 type Iprops = {
     task: Itask | null;
@@ -10,7 +9,7 @@ type Iprops = {
 
 
 
-export const initialTask: Itask = {name: '', difficulty: 0, id: '', isCompleted: false, description: "whu"};
+export const initialTask: Itask = {name: '', difficulty: 0, id: 0, isCompleted: false, description: ""};
 
 export default function TaskForm(props: Iprops) {
     const {task, saveTask} = props;
