@@ -1,12 +1,12 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { TaskList } from '../common/components/TaskList/TaskList'
 import { Itask } from '../common/components/Task/Task'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import TaskForm, { initialTask } from '../common/components/TaskForm/TaskForm'
 import { v4 as uuidv4 } from 'uuid';
 import { keyBy } from 'lodash'
+import axios from 'axios';
 
 
 
@@ -37,16 +37,36 @@ import { keyBy } from 'lodash'
   },
 ]
 
+const BASE_HREF = 'http://localhost:5000';
+const TASK = `${BASE_HREF}/Tasks`;
 
 export default function Home() {
-  const [taskListByID, setTaskListByID] = useState(keyBy(tasks, 'id'));
+  const [taskListByID, setTaskListByID] = useState({[initialTask.id]: initialTask});
   const [selectedTask, setSelectedTask] = useState(initialTask);
 
+  useEffect(() => {
+    const fetchData = async ()=> {
+      try{
+      const result = await axios.get(TASK);
+      setTaskListByID(keyBy(result.data, 'id'))
+      }
+      catch(e) {
+        console.info(e);
+      }
+    }
+    fetchData();
+  }, [])
   const saveTask = (task: Itask) => {
-    const id = task?.id || uuidv4();
-
-    setTaskListByID({...taskListByID, [id]:task})
-
+        const postTask = async ()=> {
+      try{
+      const result = await axios.post(TASK, {...task, id: '4'});
+      setTaskListByID({...taskListByID, [result.data.id]:task})
+      }
+      catch(e) {
+        console.info(e);
+      }
+    }
+    postTask();
   }
 
   const deleteTask = (id: string) => {
