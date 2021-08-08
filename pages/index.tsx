@@ -1,80 +1,12 @@
 import Head from 'next/head'
+import { useState } from 'react'
+import { initialUser } from '../common/components/LoginForm/LoginForm'
+import { useAuth } from '../common/contexts/authContext';
 import styles from '../styles/Home.module.css'
-import { TaskList } from '../common/components/TaskList/TaskList'
-import { Itask } from '../common/components/Task/Task'
-import { useEffect, useState } from 'react'
-import TaskForm, { initialTask } from '../common/components/TaskForm/TaskForm'
-import { v4 as uuidv4 } from 'uuid';
-import { keyBy } from 'lodash'
-import axios from 'axios';
 
-
-
-  const tasks= [
-  {
-    id: '1',
-    name: 'Complete App',
-    difficulty: 7,
-    isCompleted: false,
-  },
-    {
-    id: '2',
-    name: 'Clean cat box',
-    difficulty: 1,
-    isCompleted: false,
-  },
-    {
-    id: '3',
-    name: 'Take out trash',
-    difficulty: 2,
-    isCompleted: false,
-  },
-    {
-    id:'4',
-    name: 'Become Veteran Rank',
-    difficulty: 4,
-    isCompleted: false,
-  },
-]
-
-const BASE_HREF = 'http://localhost:5000';
-const TASK = `${BASE_HREF}/Tasks`;
 
 export default function Home() {
-  const [taskListByID, setTaskListByID] = useState({[initialTask.id]: initialTask});
-  const [selectedTask, setSelectedTask] = useState(initialTask);
-
-  useEffect(() => {
-    const fetchData = async ()=> {
-      try{
-      const result = await axios.get(TASK);
-      setTaskListByID(keyBy(result.data, 'id'))
-      }
-      catch(e) {
-        console.info(e);
-      }
-    }
-    fetchData();
-  }, [])
-  const saveTask = (task: Itask) => {
-        const id = task.id ? task.id : uuidv4();
-        const postTask = async ()=> {
-      try{
-      const result = await axios.post(TASK, {...task, id});
-      console.info(result);
-      setTaskListByID({...taskListByID, [id]: {...task, id}})
-      }
-      catch(e) {
-        console.info(e);
-      }
-    }
-    postTask();
-  }
-
-  const deleteTask = (id: string) => {
-    const {[id]: deletedTask, ...tasksByID} = taskListByID;
-    setTaskListByID(tasksByID)
-  }
+    const { user, login, logout } = useAuth();
 
   return (
     <div className={styles.container}>
@@ -82,14 +14,23 @@ export default function Home() {
         <title>Tata Todo</title>
         <meta name="description" content="A Chore app to consolidate ideas and needs" />
         <link rel="icon" href="/favicon.ico" />
+
       </Head>
+
 
       <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to Tata Todo
         </h1>
-        <TaskForm task={selectedTask} saveTask={saveTask}/>
-        <TaskList setSelectedTask={setSelectedTask} onDelete={deleteTask} tasks={Object.values(taskListByID)} />
+              <div>
+                    <h1>Hello Context</h1>
+                    <h2>User: {user ? user.firstName : "no user!"}</h2>
+                    <div>
+                        <button onClick={login}>Login</button>
+                        <button onClick={logout}>Logout</button>
+                    </div>
+                </div>
+
       </main>
 
       <footer className={styles.footer}>

@@ -1,11 +1,11 @@
 import React from 'react'
-import { Task, Itask } from '../Task/Task'
+import { Task, Itask } from '../TaskForm/Task'
 
 
 type Iprops = {
     tasks: Itask[];
     setSelectedTask: (task: Itask) => void;
-    onDelete: (id: number) => void;
+    onDelete: (id: string) => void;
 }
 
 

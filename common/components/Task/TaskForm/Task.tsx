@@ -1,5 +1,5 @@
 import React from 'react'
-import { IbaseObject } from '../../models';
+import { IbaseObject } from '../../../models';
 
 export interface Itask extends IbaseObject {
     name: string;

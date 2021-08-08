@@ -1,35 +1,33 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { Itask } from "../Task/Task";
-
-type Iprops = {
-    task: Itask | null;
-    saveTask: (task: Itask) => void;
-}
+import {Iuser} from '../../models';
 
 
 
-export const initialTask: Itask = {name: '', difficulty: 0, id: '', isCompleted: false, description: ""};
 
-export default function TaskForm(props: Iprops) {
-    const {task, saveTask} = props;
+
+export const initialUser: Iuser = {firstName: '', lastName: '', id: '', email: '', groupID: '', password: ''};
+
+export default function LoginForm() {
+    // const {task, saveTask} = props;
 
   return (
       <Formik
        enableReinitialize
-       initialValues={task || initialTask}
+       initialValues={initialUser}
        onSubmit={(values, { setSubmitting }) => {
          console.info(values);
-         saveTask(values)
          setSubmitting(false);
        }}
      >
        {({ isSubmitting }) => (
          <Form>
-           <Field type="text" name="name" />
            {/* <ErrorMessage name="email" component="div" /> */}
-           <Field type="number" name="difficulty" />
-           <Field type="text" name="description" />
+           <label htmlFor="email">Email</label>
+           <Field type="text" name="email" />
+           <label htmlFor="password">Password</label>
+           <Field type="password" name="password" />
+
            {/* <ErrorMessage name="password" component="div" /> */}
            <button type="submit" disabled={isSubmitting}>
              Submit
