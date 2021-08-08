@@ -9,7 +9,7 @@ type Iprops = {
 
 
 
-export const initialTask: Itask = {name: '', difficulty: 0, id: 0, isCompleted: false, description: ""};
+export const initialTask: Itask = {name: '', difficulty: 0, id: '', isCompleted: false, description: ""};
 
 export default function TaskForm(props: Iprops) {
     const {task, saveTask} = props;
@@ -20,8 +20,8 @@ export default function TaskForm(props: Iprops) {
        initialValues={task || initialTask}
        onSubmit={(values, { setSubmitting }) => {
          console.info(values);
-           saveTask(values)
-
+         saveTask(values)
+         setSubmitting(false);
        }}
      >
        {({ isSubmitting }) => (
