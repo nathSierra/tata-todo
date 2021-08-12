@@ -3,7 +3,7 @@ import { Iuser } from "../models";
 
 type authContextType = {
     user: Iuser | null;
-    login: () => void;
+    login: (user: Iuser) => void;
     logout: () => void;
 };
 
@@ -34,8 +34,9 @@ const NathanUser = {
 export function AuthProvider({ children }: Props) {
       const [user, setUser] = useState<Iuser | null>(null);
 
-    const login = () => {
-        setUser(NathanUser);
+    const login = (user: Iuser) => {
+        console.info('user', user)
+        setUser(user);
     };
 
     const logout = () => {

@@ -3,8 +3,7 @@ export type IbaseObject = {
 }
 
 export interface Iuser extends IbaseObject {
-    firstName: string;
-    lastName: string;
+    username: string;
     email: string;
     groupID?: string;
     password?: string;

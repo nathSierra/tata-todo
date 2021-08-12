@@ -14,7 +14,7 @@ export default function Login() {
   return (
     <>
    <LoginForm />
-    <h3> Not registered? No problem. <button onClick={() => setView(_ => registration.SIGNUP)}>Go to Registration</button>:</h3>
+    <h3> Not registered? No problem: <button onClick={() => setView(_ => registration.SIGNUP)}>Go to Registration</button></h3>
    </>
   )}
   else {

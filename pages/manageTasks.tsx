@@ -6,6 +6,7 @@ import { Itask } from '../common/components/Task/TaskForm/Task'
 import { TaskList } from '../common/components/Task/TaskList/TaskList'
 
 import { v4 as uuidv4 } from 'uuid';
+import { api, BASE_HREF } from '../common/api'
 
 
 
@@ -41,8 +42,8 @@ type Iprops = {
   },
 ]
 
-const BASE_HREF = 'http://localhost:5000';
-const TASK = `${BASE_HREF}/Tasks`;
+
+
 
 
 
@@ -53,7 +54,7 @@ export default function ManageTasks (props: Iprops) {
   useEffect(() => {
     const fetchData = async ()=> {
       try{
-      const result = await axios.get(TASK);
+      const result = await axios.get(api.TASK);
       setTaskListByID(keyBy(result.data, 'id'))
       }
       catch(e) {
@@ -66,7 +67,7 @@ export default function ManageTasks (props: Iprops) {
         const id = task.id ? task.id : uuidv4();
         const postTask = async ()=> {
       try{
-      const result = await axios.post(TASK, {...task, id});
+      const result = await axios.post(api.TASK, {...task, id});
       console.info(result);
       setTaskListByID({...taskListByID, [id]: {...task, id}})
       }

@@ -6,7 +6,7 @@ import {Iuser} from '../../models';
 
 
 
-export const initialUser: Iuser = {firstName: '', lastName: '', id: '', email: '', groupID: '', password: ''};
+export const initialUser: Partial<Iuser> = {username: '', email: '', groupID: '', password: ''};
 
 export default function LoginForm() {
     // const {task, saveTask} = props;

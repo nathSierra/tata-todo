@@ -24,10 +24,10 @@ export default function Home() {
         </h1>
               <div>
                     <h1>Hello Context</h1>
-                    <h2>User: {user ? user.firstName : "no user!"}</h2>
+                    <h2>User: {user ? user.username : "no user!"}</h2>
                     <div>
-                        <button onClick={login}>Login</button>
-                        <button onClick={logout}>Logout</button>
+                        {/* <button onClick={login}>Login</button>
+                        <button onClick={logout}>Logout</button> */}
                     </div>
                 </div>
 
