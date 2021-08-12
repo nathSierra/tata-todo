@@ -15,11 +15,10 @@ export const initialUser: Partial<Iuser> = {username: '', email: '', password: '
 export default function SignUpForm() {
   const { user, login, logout } = useAuth();
   const router = useRouter();
-  const createUser = (values: Partial<Iuser>) => {
+  const registerUser = (values: Partial<Iuser>) => {
         const postUser = async ()=> {
       try{
       const result: {data: Iuser} = await axios.post(api.USER, values);
-      console.info(result);
       login(result.data);
       router.push('/')
       }
@@ -34,7 +33,7 @@ export default function SignUpForm() {
        enableReinitialize
        initialValues={initialUser}
        onSubmit={(values, { setSubmitting }) => {
-         createUser(values);
+         registerUser(values);
          setSubmitting(false);
        }}
      >

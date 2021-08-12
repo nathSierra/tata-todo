@@ -7,22 +7,22 @@ import SignUpForm from '../common/components/LoginForm/SignUpForm'
   LOGIN = "LOGIN"
 }
 
-export default function Login() {
+export default function Register() {
   const [View, setView] = useState(registration.LOGIN)
 
-  if (View === registration.LOGIN){
   return (
-    <>
+    <main className="flex flex-col justify-center items-center p-40 h-screen">
+   {View === registration.LOGIN ?
+   <>
    <LoginForm />
-    <h3> Not registered? No problem: <button onClick={() => setView(_ => registration.SIGNUP)}>Go to Registration</button></h3>
+    <h2> Not registered? No problem: <button onClick={() => setView(_ => registration.SIGNUP)}>Go to Registration</button></h2>
    </>
-  )}
-  else {
-    return(
+    :
     <>
     <SignUpForm />
-      <h3> Login instead? <button onClick={() => setView(_ => registration.LOGIN)}>Login</button>:</h3>
-    </>
-    )
+      <h2> Login instead? <button onClick={() => setView(_ => registration.LOGIN)}>Login</button>:</h2>
+     </>
   }
+  </main>
+  )
 }
