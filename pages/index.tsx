@@ -1,5 +1,7 @@
+import axios from 'axios';
 import Head from 'next/head'
 import { useState } from 'react'
+import { api, getAuthToken } from '../common/api';
 import LoginForm, { initialUser } from '../common/components/LoginForm/LoginForm'
 import { useAuth } from '../common/contexts/authContext';
 import home from '../styles/Home.module.css'
@@ -8,6 +10,22 @@ import home from '../styles/Home.module.css'
 export default function Home() {
     const { user, login, logout } = useAuth();
 
+  const getProfile = () =>{
+        const postUser = async ()=> {
+      try{
+        const result = await axios.get(api.PROFILE, {
+          headers: {
+            'Authorization': `bearer ${getAuthToken()}`
+          }
+        });
+        alert(result);
+      }
+      catch(e) {
+        console.info(e);
+      }
+    }
+    postUser()
+  }
   return (
     <div className={home.container}>
       <Head>
@@ -31,7 +49,7 @@ export default function Home() {
                         <button onClick={logout}>Logout</button> */}
                     </div>
                 </div>
-
+        <button onClick={getProfile}> Get Profile Data?</button>
       </main>
 
       <footer className={home.footer}>

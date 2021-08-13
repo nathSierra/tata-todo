@@ -12,13 +12,19 @@ import { useAuth } from "../../contexts/authContext";
 
 export const initialUser: Partial<Iuser> = {username: '', password: ''};
 
+export interface IloginResponse {
+  data: {user: Iuser, accessToken: string}
+}
 export default function LoginForm() {
   const { user, login, logout } = useAuth();
   const loginUser = (values: Partial<Iuser>) => {
         const postUser = async ()=> {
       try{
-        const result: {data: { access_token: string, user: Iuser}} = await axios.post(api.LOGIN, values);
-        login(result.data.user);
+        const result: IloginResponse = await axios.post(api.LOGIN, values);
+        const {user, accessToken} = result.data;
+        console.info(accessToken)
+        localStorage.setItem('bearerToken', accessToken);
+        login(user);
       }
       catch(e) {
         console.info(e);

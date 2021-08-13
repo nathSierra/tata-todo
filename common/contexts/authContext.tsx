@@ -32,10 +32,9 @@ const NathanUser = {
 }
 
 export function AuthProvider({ children }: Props) {
-      const [user, setUser] = useState<Iuser | null>(null);
+    const [user, setUser] = useState<Iuser | null>(null);
 
     const login = (user: Iuser) => {
-        console.info('user', user)
         setUser(user);
     };
 
