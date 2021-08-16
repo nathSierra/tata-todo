@@ -16,6 +16,14 @@ body {
   background-color: hsl(	25, 89%, 60%);
 }
 
+.task button {
+  color: hsla(50, 100%, 63%, 1);
+}
+
+.task button:hover {
+  color: hsla(50, 100%, 23%, 1);
+}
+
 button {
   color: hsl(	25, 89%, 60%);
 
