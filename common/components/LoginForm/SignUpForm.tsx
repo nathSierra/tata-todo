@@ -20,7 +20,7 @@ export default function SignUpForm() {
       try{
       const result: {data: Iuser} = await axios.post(api.USER, values);
       login(result.data);
-      router.push('/')
+      router.push('/manageTasks')
       }
       catch(e) {
         console.info(e);

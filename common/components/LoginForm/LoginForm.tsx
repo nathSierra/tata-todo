@@ -25,6 +25,7 @@ export default function LoginForm() {
         console.info(accessToken)
         localStorage.setItem('bearerToken', accessToken);
         login(user);
+        router.push('/manageTasks');
       }
       catch(e) {
         console.info(e);

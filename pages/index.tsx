@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Head from 'next/head'
+import router from 'next/router';
 import { useState } from 'react'
 import { api, getAuthToken } from '../common/api';
 import LoginForm, { initialUser } from '../common/components/LoginForm/LoginForm'
@@ -49,6 +50,7 @@ export default function Home() {
                         <button onClick={logout}>Logout</button> */}
                     </div>
                 </div>
+                 <button onClick={() => {router.push('/register')}}>Register Here</button>
         <button onClick={getProfile}> Get Profile Data?</button>
       </main>
 

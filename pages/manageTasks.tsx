@@ -8,44 +8,9 @@ import { TaskList } from '../common/components/Task/TaskList/TaskList'
 import { v4 as uuidv4 } from 'uuid';
 import { api, BASE_HREF } from '../common/api'
 
-
-
 type Iprops = {
     tasks: Itask[];
 }
-
-
-  const tasks= [
-  {
-    id: '1',
-    name: 'Complete App',
-    difficulty: 7,
-    isCompleted: false,
-  },
-    {
-    id: '2',
-    name: 'Clean cat box',
-    difficulty: 1,
-    isCompleted: false,
-  },
-    {
-    id: '3',
-    name: 'Take out trash',
-    difficulty: 2,
-    isCompleted: false,
-  },
-    {
-    id:'4',
-    name: 'Become Veteran Rank',
-    difficulty: 4,
-    isCompleted: false,
-  },
-]
-
-
-
-
-
 
 export default function ManageTasks (props: Iprops) {
      const [taskListByID, setTaskListByID] = useState({[initialTask.id]: initialTask});
@@ -83,9 +48,10 @@ export default function ManageTasks (props: Iprops) {
     setTaskListByID(tasksByID)
   }
     return (
-        <>
-          <TaskForm task={selectedTask} saveTask={saveTask}/>
+
+        <div className="m-4 flex flex-col justify-center items-center">
+          <TaskForm task={selectedTask} saveTask={saveTask} color="hsla(50, 100%, 63%, 1)"/>
         <TaskList setSelectedTask={setSelectedTask} onDelete={deleteTask} tasks={Object.values(taskListByID)} />
-        </>
+        </div>
     )
 }

@@ -5,14 +5,17 @@ import { Itask } from "./Task";
 type Iprops = {
     task: Itask | null;
     saveTask: (task: Itask) => void;
+    color?: string;
 }
+
+const ORANGE = 'hsl(	25, 89%, 60%)';
 
 
 
 export const initialTask: Itask = {name: '', difficulty: 0, id: '', isCompleted: false, description: ""};
 
 export default function TaskForm(props: Iprops) {
-    const {task, saveTask} = props;
+    const {task, saveTask, color=ORANGE} = props;
 
   return (
       <Formik
@@ -25,16 +28,21 @@ export default function TaskForm(props: Iprops) {
        }}
      >
        {({ isSubmitting }) => (
-         <Form>
-            <label htmlFor="name">Name</label>
+         <Form className="form-container">
+            <span className="row"><label htmlFor="name">Name</label>
            <Field type="text" name="name" />
+           </span>
            {/* <ErrorMessage name="email" component="div" /> */}
-          <label htmlFor="difficulty">Difficulty</label>
+           <span className="row">
+          <label htmlFor="difficulty" >Difficulty</label>
            <Field type="number" name="difficulty" />
+           </span>
+            <span className="row">
             <label htmlFor="description">Description</label>
            <Field type="text" name="description" />
            {/* <ErrorMessage name="password" component="div" /> */}
-           <button type="submit" disabled={isSubmitting}>
+           </span>
+           <button style={{backgroundColor: color}}type="submit" disabled={isSubmitting}>
              Submit
            </button>
          </Form>

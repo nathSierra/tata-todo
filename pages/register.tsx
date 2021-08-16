@@ -8,7 +8,7 @@ import SignUpForm from '../common/components/LoginForm/SignUpForm'
 }
 
 export default function Register() {
-  const [View, setView] = useState(registration.LOGIN)
+  const [View, setView] = useState(registration.SIGNUP)
 
   return (
     <main className="flex flex-col justify-center items-center p-40 h-screen">
@@ -20,7 +20,7 @@ export default function Register() {
     :
     <>
     <SignUpForm />
-      <h2> Login instead? <button onClick={() => setView(_ => registration.LOGIN)}>Login</button>:</h2>
+      <h2> Login instead? <button onClick={() => setView(_ => registration.LOGIN)}>Login</button></h2>
      </>
   }
   </main>

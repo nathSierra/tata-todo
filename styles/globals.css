@@ -2,8 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 html,
 body {
+  --orange-hue: "25";
+  --orange-saturation: "89%";
+  --orange-lightness: "60%";
+  --yellow: "hsla(50, 100%, 63%, 1)";
   padding: 0;
   margin: 0;
   font-family: 'Shadows Into Light', cursive;
@@ -20,6 +26,15 @@ button:hover {
 
 
 
+.form-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.row {
+  display: flex;
+  flex-basis: 50%;
+}
 
 a {
   color: inherit;
