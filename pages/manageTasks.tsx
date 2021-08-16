@@ -45,6 +45,17 @@ export default function ManageTasks (props: Iprops) {
 
   const deleteTask = (id: string) => {
     const {[id]: deletedTask, ...tasksByID} = taskListByID;
+
+    const deleteTask = async () => {
+      try {
+      const result = await axios.delete(`${api.TASK}/${id}`);
+      }
+      catch(e) {
+        console.info(e);
+      }
+    }
+
+    deleteTask();
     setTaskListByID(tasksByID)
   }
     return (
