@@ -49,7 +49,7 @@ export default function SignUpForm() {
           <Field type="text" name="groupID" className="hover:bg-yellow-light" placeholder="80-94-32-21"/>
 
            {/* <ErrorMessage name="password" component="div" /> */}
-           <button type="submit" disabled={isSubmitting}>
+           <button className="bg-yellow-normal hover:bg-yellow-light" type="submit" disabled={isSubmitting}>
              Submit
            </button>
          </Form>

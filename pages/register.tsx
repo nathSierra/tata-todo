@@ -15,7 +15,7 @@ export default function Register() {
    {View === registration.LOGIN ?
    <>
    <LoginForm />
-    <h2> Not registered? No problem: <button onClick={() => setView(_ => registration.SIGNUP)}>Go to Registration</button></h2>
+    <h2> Not registered? No problem: <button className="bg-yellow-normal hover:bg-yellow-light" onClick={() => setView(_ => registration.SIGNUP)}>Go to Registration</button></h2>
    </>
     :
     <>

@@ -44,15 +44,16 @@ export default function LoginForm() {
        }}
      >
        {({ isSubmitting }) => (
-         <Form className="flex justify-center items-center h-10 mt-4 pt-4">
+          <Form className="flex flex-col border-2 border-yellow-normal">
+
          {/* <ErrorMessage name="email" component="div" /> */}
            <label htmlFor="username">Username</label>
-           <Field type="text" name="username" />
+           <Field type="text" name="username" className="hover:bg-yellow-light" placeholder="mel" />
            <label htmlFor="password">Password</label>
-           <Field type="password" name="password" />
+           <Field type="password" name="password" className="hover:bg-yellow-light" />
 
            {/* <ErrorMessage name="password" component="div" /> */}
-           <button type="submit" disabled={isSubmitting}>
+           <button className="bg-yellow-normal hover:bg-yellow-light" type="submit" disabled={isSubmitting}>
              Submit
            </button>
          </Form>
