@@ -3,7 +3,7 @@ import { Task, Itask } from '../TaskForm/Task'
 
 
 type Iprops = {
-    tasks: Itask[];
+    tasks: Itask[] | undefined;
     setSelectedTask: (task: Itask) => void;
     onDelete: (id: string) => void;
 }
@@ -11,6 +11,12 @@ type Iprops = {
 
 export const TaskList = (props: Iprops) => {
     const {tasks, setSelectedTask, onDelete} = props;
+    if (!tasks){
+        return (
+            <span>No tasks!</span>
+        )
+    }
+
     if (tasks.length === 0) <> No Tasks! </>
     return (
        <ul>

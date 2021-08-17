@@ -7,34 +7,49 @@ import { TaskList } from '../common/components/Task/TaskList/TaskList'
 
 import { v4 as uuidv4 } from 'uuid';
 import { api, BASE_HREF } from '../common/api'
+import { useMutation, useQueryClient, useQuery } from 'react-query'
 
 type Iprops = {
     tasks: Itask[];
 }
 
 export default function ManageTasks (props: Iprops) {
-     const [taskListByID, setTaskListByID] = useState({[initialTask.id]: initialTask});
   const [selectedTask, setSelectedTask] = useState(initialTask);
+    const { isLoading, isError, data, error } = useQuery('tasks', async () => {
 
-  useEffect(() => {
-    const fetchData = async ()=> {
-      try{
-      const result = await axios.get(api.TASK);
-      setTaskListByID(keyBy(result.data, 'id'))
-      }
-      catch(e) {
-        console.info(e);
-      }
+      const result = await axios.get(api.TASK)
+      return result.data as Itask[];
     }
-    fetchData();
-  }, [])
+   )
+   if(isLoading){
+     return <span>Loading...</span>
+   }
+    //  const [taskListByID, setTaskListByID] = useState({[initialTask.id]: initialTask});
+
+  // const queryClient = useQueryClient();
+
+
+  // const mutation = useMutation()
+
+  // useEffect(() => {
+  //   const fetchData = async ()=> {
+  //     try{
+
+  //     setTaskListByID()
+  //     }
+  //     catch(e) {
+  //       console.info(e);
+  //     }
+  //   }
+  //   fetchData();
+  // }, [])
   const saveTask = (task: Itask) => {
         const id = task.id ? task.id : uuidv4();
         const postTask = async ()=> {
       try{
       const result = await axios.post(api.TASK, {...task, id});
       console.info(result);
-      setTaskListByID({...taskListByID, [id]: {...task, id}})
+      // setTaskListByID({...taskListByID, [id]: {...task, id}})
       }
       catch(e) {
         console.info(e);
@@ -44,11 +59,11 @@ export default function ManageTasks (props: Iprops) {
   }
 
   const deleteTask = (id: string) => {
-    const {[id]: deletedTask, ...tasksByID} = taskListByID;
+    // const {[id]: deletedTask, ...tasksByID} = taskListByID;
 
     const deleteTask = async () => {
       try {
-      const result = await axios.delete(`${api.TASK}/${id}`);
+      await axios.delete(`${api.TASK}/${id}`);
       }
       catch(e) {
         console.info(e);
@@ -56,13 +71,13 @@ export default function ManageTasks (props: Iprops) {
     }
 
     deleteTask();
-    setTaskListByID(tasksByID)
+    // setTaskListByID(tasksByID)
   }
     return (
 
         <div className="m-4 flex flex-col justify-center items-center">
           <TaskForm task={selectedTask} saveTask={saveTask} color="hsla(50, 100%, 63%, 1)"/>
-        <TaskList setSelectedTask={setSelectedTask} onDelete={deleteTask} tasks={Object.values(taskListByID)} />
+        <TaskList setSelectedTask={setSelectedTask} onDelete={deleteTask} tasks={data} />
         </div>
     )
 }
