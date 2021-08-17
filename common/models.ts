@@ -5,6 +5,11 @@ export type IbaseObject = {
 export interface Iuser extends IbaseObject {
     username: string;
     email: string;
-    groupID?: string;
+    teamID?: string;
     password?: string;
+}
+
+export interface Iteam extends IbaseObject {
+    name: string;
+    users: string[]; // array of user IDs...?
 }

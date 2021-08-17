@@ -16,7 +16,7 @@ export interface IloginResponse {
   data: {user: Iuser, accessToken: string}
 }
 export default function LoginForm() {
-  const { user, login, logout } = useAuth();
+  const { user, login, logout, assignTeam } = useAuth();
   const loginUser = (values: Partial<Iuser>) => {
         const postUser = async ()=> {
       try{
@@ -24,7 +24,11 @@ export default function LoginForm() {
         const {user, accessToken} = result.data;
         console.info(accessToken)
         localStorage.setItem('bearerToken', accessToken);
+        console.info(user);
         login(user);
+
+
+
         router.push('/manageTasks');
       }
       catch(e) {

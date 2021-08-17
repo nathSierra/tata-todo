@@ -4,6 +4,7 @@ import router from 'next/router';
 import { useState } from 'react'
 import { api, getAuthToken } from '../common/api';
 import LoginForm, { initialUser } from '../common/components/LoginForm/LoginForm'
+import { initialTeam } from '../common/components/TeamForm/TeamForm';
 import { useAuth } from '../common/contexts/authContext';
 import home from '../styles/Home.module.css'
 

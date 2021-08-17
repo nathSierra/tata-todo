@@ -1,16 +1,24 @@
 import { createContext, ReactNode, useContext, useState } from "react";
-import { Iuser } from "../models";
+import { Iteam, Iuser } from "../models";
 
 type authContextType = {
     user: Iuser | null;
     login: (user: Iuser) => void;
     logout: () => void;
+    team: Iteam | null;
+    assignTeam: (team: Iteam) => void;
+    removeTeam: () => void;
 };
 
 const authContextDefaultValues: authContextType = {
     user: null,
+    team: null,
+
     login: () => {},
     logout: () => {},
+
+    assignTeam: () => {},
+    removeTeam: () => {},
 };
 
 const AuthContext = createContext<authContextType>(authContextDefaultValues);
@@ -23,20 +31,22 @@ type Props = {
     children: ReactNode;
 };
 
-const NathanUser = {
-  firstName: 'Nathan',
-  lastName: 'Sierra',
-  email: 'email.tail',
-  id: '1',
-
-}
 
 export function AuthProvider({ children }: Props) {
     const [user, setUser] = useState<Iuser | null>(null);
+    const [team, setTeam] = useState<Iteam | null>(null);
 
     const login = (user: Iuser) => {
         setUser(user);
     };
+
+    const assignTeam = (team: Iteam) => {
+        setTeam(team);
+    }
+
+    const removeTeam = () => {
+        setTeam(null);
+    }
 
     const logout = () => {
         setUser(null);
@@ -44,8 +54,11 @@ export function AuthProvider({ children }: Props) {
 
     const value = {
         user,
+        team,
         login,
         logout,
+        assignTeam,
+        removeTeam
     };
 
     return (

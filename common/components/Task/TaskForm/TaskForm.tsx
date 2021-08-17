@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Itask } from "./Task";
+import { useAuth } from "../../../contexts/authContext";
 
 type Iprops = {
     task: Itask | null;
@@ -12,10 +13,11 @@ const ORANGE = 'hsl(	25, 89%, 60%)';
 
 
 
-export const initialTask: Itask = {name: '', difficulty: 0, id: '', isCompleted: false, description: ""};
+export const initialTask: Itask = {name: '', difficulty: 0, id: '', isCompleted: false, description: "", teamID: ''};
 
 export default function TaskForm(props: Iprops) {
     const {task, saveTask, color=ORANGE} = props;
+    const {team} = useAuth();
 
   return (
       <Formik
@@ -23,7 +25,11 @@ export default function TaskForm(props: Iprops) {
        initialValues={task || initialTask}
        onSubmit={(values, { setSubmitting }) => {
          console.info(values);
-         saveTask(values)
+         if(!team){
+           alert('gotta create a team dude');
+           return;
+         }
+         saveTask({...values, teamID: team.id})
          setSubmitting(false);
        }}
      >

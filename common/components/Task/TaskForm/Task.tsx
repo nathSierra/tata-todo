@@ -9,6 +9,7 @@ export interface Itask extends IbaseObject {
     description?: string;
     difficulty: number;
     isCompleted: boolean;
+    teamID: string;
 }
 
 export type Iprops = {
