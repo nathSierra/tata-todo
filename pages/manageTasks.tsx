@@ -21,6 +21,8 @@ export default function ManageTasks (props: Iprops) {
       return result.data as Itask[];
     }
    )
+
+
    if(isLoading){
      return <span>Loading...</span>
    }
@@ -43,20 +45,8 @@ export default function ManageTasks (props: Iprops) {
   //   }
   //   fetchData();
   // }, [])
-  const saveTask = (task: Itask) => {
-        const id = task.id ? task.id : uuidv4();
-        const postTask = async ()=> {
-      try{
-      const result = await axios.post(api.TASK, {...task, id});
-      console.info(result);
-      // setTaskListByID({...taskListByID, [id]: {...task, id}})
-      }
-      catch(e) {
-        console.info(e);
-      }
-    }
-    postTask();
-  }
+
+
 
   const deleteTask = (id: string) => {
     // const {[id]: deletedTask, ...tasksByID} = taskListByID;
@@ -76,7 +66,7 @@ export default function ManageTasks (props: Iprops) {
     return (
 
         <div className="m-4 flex flex-col justify-center items-center">
-          <TaskForm task={selectedTask} saveTask={saveTask} color="hsla(50, 100%, 63%, 1)"/>
+          <TaskForm task={selectedTask} color="hsla(50, 100%, 63%, 1)"/>
         <TaskList setSelectedTask={setSelectedTask} onDelete={deleteTask} tasks={data} />
         </div>
     )
