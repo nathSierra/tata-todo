@@ -38,13 +38,15 @@ export default function SignUpForm() {
        }}
      >
        {({ isSubmitting }) => (
-         <Form>
+         <Form className="flex flex-col border-2 border-yellow-normal">
           <label htmlFor="username">Username</label>
-          <Field type="text" name="username" />
+          <Field type="text" name="username" className="hover:bg-yellow-light" placeholder="Melvin" />
           <label htmlFor="email">Email</label>
-           <Field type="text" name="email" />
+           <Field type="text" name="email" className="hover:bg-yellow-light" />
           <label htmlFor="password">Password</label>
-           <Field type="password" name="password" />
+           <Field type="password" name="password" className="hover:bg-yellow-light" />
+          <label htmlFor="groupID">groupID</label>
+          <Field type="text" name="groupID" className="hover:bg-yellow-light" placeholder="80-94-32-21"/>
 
            {/* <ErrorMessage name="password" component="div" /> */}
            <button type="submit" disabled={isSubmitting}>

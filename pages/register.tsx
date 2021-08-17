@@ -20,7 +20,7 @@ export default function Register() {
     :
     <>
     <SignUpForm />
-      <h2> Login instead? <button onClick={() => setView(_ => registration.LOGIN)}>Login</button></h2>
+      <h2> Login instead? <button className="bg-yellow-normal hover:bg-yellow-light" onClick={() => setView(_ => registration.LOGIN)}>Login</button></h2>
      </>
   }
   </main>
