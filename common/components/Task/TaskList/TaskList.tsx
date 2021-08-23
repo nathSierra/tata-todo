@@ -11,6 +11,7 @@ type Iprops = {
 
 export const TaskList = (props: Iprops) => {
     const {tasks, setSelectedTask, onDelete} = props;
+    console.info(tasks);
     if (tasks.length === 0) <> No Tasks! </>
     return (
        <ul>

@@ -6,6 +6,7 @@ export interface Iuser extends IbaseObject {
     username: string;
     email: string;
     teamID?: string;
+    teams?: Iteam[];
     password?: string;
 }
 
