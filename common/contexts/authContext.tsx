@@ -1,4 +1,6 @@
 import { createContext, ReactNode, useContext, useState } from "react";
+import { initialUser } from "../components/LoginForm/LoginForm";
+import { initialTeam } from "../components/TeamForm/TeamForm";
 import { Iteam, Iuser } from "../models";
 
 type authContextType = {
@@ -33,15 +35,25 @@ type Props = {
 
 
 export function AuthProvider({ children }: Props) {
-    const [user, setUser] = useState<Iuser | null>(null);
-    const [team, setTeam] = useState<Iteam | null>(null);
+    const persistentUserData = process.browser ? localStorage.getItem('user-data') : null;
+    const persistentTeamData = process.browser ? localStorage.getItem('user-team') : null;
+    console.info(persistentUserData)
+    const [user, setUser] = useState<any | null>(persistentUserData ? JSON.parse(persistentUserData) : initialUser);
+    const [team, setTeam] = useState<any | null>(persistentTeamData ? JSON.parse(persistentTeamData) : initialTeam);
 
     const login = (user: Iuser) => {
         setUser(user);
+        setTeam(user.teams ? user.teams[0] : initialTeam);
+        const {teams} = user;
+        localStorage.setItem('user-data', JSON.stringify(user));
+        user.teams ? localStorage.setItem('user-team', JSON.stringify(user.teams[0])) : localStorage.setItem('user-team', JSON.stringify(initialTeam))
+
     };
 
-    const assignTeam = (team: Iteam) => {
+    const assignTeam = (team: Iteam | string) => {
         setTeam(team);
+        localStorage.setItem('user-team', JSON.stringify(team))
+        localStorage.removeItem('user-team')
     }
 
     const removeTeam = () => {
@@ -50,6 +62,8 @@ export function AuthProvider({ children }: Props) {
 
     const logout = () => {
         setUser(null);
+            localStorage.removeItem('user-data');
+            localStorage.removeItem('user-team')
     };
 
     const value = {

@@ -21,8 +21,10 @@ export const getTasksByTeamID = async (teamID: string) => {
 export default function ManageTasks (props: Iprops) {
   const [taskListByID, setTaskListByID] = useState({[initialTask.id]: initialTask});
   const [selectedTask, setSelectedTask] = useState(initialTask);
-  const { user } = useAuth();
-  const teamID = user && user.teams ? user.teams[0].id : '';
+  const { user, team } = useAuth();
+  console.info('team', team);
+  console.info('user', user);
+  const teamID = team ? team.id : '';
   console.info(teamID);
   const queryClient = useQueryClient();
 
@@ -33,7 +35,7 @@ export default function ManageTasks (props: Iprops) {
       onMutate: async (newTask: Itask) => {
         setSelectedTask(initialTask)
         // Cancel any outgoing refetches (so they don't overwrite our optimistic update)
-        await queryClient.cancelQueries('todos')
+        await queryClient.cancelQueries('tasks')
 
         // Snapshot the previous value
         const previousTodos = queryClient.getQueryData<Itask[]>('tasks')
@@ -56,13 +58,12 @@ export default function ManageTasks (props: Iprops) {
       },
       // Always refetch after error or success:
       onSettled: () => {
-        queryClient.invalidateQueries('todos')
+        queryClient.invalidateQueries('tasks')
       },
     }
   )
 
 
-  // const result = useQuery<Itask[], Error>(['tasks', teamID], () => getTasksByTeamID(teamID));
 
   const { isLoading, data } = useQuery(['tasks', teamID], async () => { return getTasksByTeamID(teamID)})
 
@@ -70,21 +71,6 @@ export default function ManageTasks (props: Iprops) {
   if(isLoading){
     return <h1>Loading</h1>
   }
-
-  // const postTask = (task: Itask) => {
-  //       const id = task.id ? task.id : uuidv4();
-  //       const postTask = async ()=> {
-  //     try{
-  //     const result = await axios.post(api.TASK, {...task, id});
-  //     console.info(result);
-  //     setTaskListByID({...taskListByID, [id]: {...task, id}})
-  //     }
-  //     catch(e) {
-  //       console.info(e);
-  //     }
-  //   }
-  //   postTask();
-  // }
 
   const deleteTask = (id: string) => {
     const {[id]: deletedTask, ...tasksByID} = taskListByID;
