@@ -7,7 +7,8 @@ export const api = {
   USER: `${BASE_HREF}/Accounts`,
   LOGIN: `${BASE_HREF}/Auth/Login`,
   PROFILE: `${BASE_HREF}/Profile`,
-  TEAM: `${BASE_HREF}/Team`
+  TEAM: `${BASE_HREF}/Team`,
+  ACCOUNTSBYTEAM: `${BASE_HREF}/Team/Accounts/`
 }
 
 export const getAuthToken = (): string| null => localStorage.getItem('bearerToken');

@@ -18,14 +18,17 @@ export const getTasksByTeamID = async (teamID: string) => {
     return (await axios.get(api.TASK +'/' + teamID)).data;
 }
 
+export const getAccountsByTeamID = async (teamID: string) => {
+  return (await axios.get(api.ACCOUNTSBYTEAM + teamID)).data;
+}
+
 export default function ManageTasks (props: Iprops) {
   const [taskListByID, setTaskListByID] = useState({[initialTask.id]: initialTask});
   const [selectedTask, setSelectedTask] = useState(initialTask);
   const { user, team } = useAuth();
-  console.info('team', team);
-  console.info('user', user);
+
   const teamID = team ? team.id : '';
-  console.info(teamID);
+
   const queryClient = useQueryClient();
 
   const addTodoMutation = useMutation(
@@ -38,22 +41,22 @@ export default function ManageTasks (props: Iprops) {
         await queryClient.cancelQueries('tasks')
 
         // Snapshot the previous value
-        const previousTodos = queryClient.getQueryData<Itask[]>('tasks')
+        const previousTasks = queryClient.getQueryData<Itask[]>('tasks')
 
         // Optimistically update to the new value
-        if (previousTodos) {
+        if (previousTasks) {
           queryClient.setQueryData<Itask[]>('tasks', [
-            ...previousTodos,
+            ...previousTasks,
           {...newTask, teamID}
           ])
         }
 
-        return { previousTodos }
+        return { previousTasks }
       },
       // If the mutation fails, use the context returned from onMutate to roll back
       onError: (err, variables, context) => {
-        if (context?.previousTodos) {
-          queryClient.setQueryData<Itask[]>('tasks', context.previousTodos)
+        if (context?.previousTasks) {
+          queryClient.setQueryData<Itask[]>('tasks', context.previousTasks)
         }
       },
       // Always refetch after error or success:
@@ -65,10 +68,11 @@ export default function ManageTasks (props: Iprops) {
 
 
 
-  const { isLoading, data } = useQuery(['tasks', teamID], async () => { return getTasksByTeamID(teamID)})
+  const { isLoading: isTasksLoading, data: taskData } = useQuery(['tasks', teamID], async () => { return getTasksByTeamID(teamID)})
 
 
-  if(isLoading){
+  let appIsLoading = isTasksLoading;
+  if(appIsLoading){
     return <h1>Loading</h1>
   }
 
@@ -91,8 +95,8 @@ export default function ManageTasks (props: Iprops) {
       <>
         <h1>Team: { user && user.teams && user.teams[0].name } </h1>
         <div className="m-4 flex flex-col justify-center items-center">
-          <TaskForm task={selectedTask} saveTask={addTodoMutation.mutate} color="hsla(50, 100%, 63%, 1)"/>
-        <TaskList setSelectedTask={setSelectedTask} onDelete={deleteTask} tasks={Object.values(data)} />
+        <TaskForm task={selectedTask} saveTask={addTodoMutation.mutate} color="hsla(50, 100%, 63%, 1)"/>
+        <TaskList setSelectedTask={setSelectedTask} onDelete={deleteTask} tasks={Object.values(taskData)} />
         </div>
         </>
     )
