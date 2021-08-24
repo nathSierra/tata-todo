@@ -37,7 +37,6 @@ type Props = {
 export function AuthProvider({ children }: Props) {
     const persistentUserData = process.browser ? localStorage.getItem('user-data') : null;
     const persistentTeamData = process.browser ? localStorage.getItem('user-team') : null;
-    console.info(persistentUserData)
     const [user, setUser] = useState<any | null>(persistentUserData ? JSON.parse(persistentUserData) : initialUser);
     const [team, setTeam] = useState<any | null>(persistentTeamData ? JSON.parse(persistentTeamData) : initialTeam);
 

@@ -69,9 +69,10 @@ export default function ManageTasks (props: Iprops) {
 
 
   const { isLoading: isTasksLoading, data: taskData } = useQuery(['tasks', teamID], async () => { return getTasksByTeamID(teamID)})
+  const { isLoading: isAccountsLoading, data: userData } = useQuery(['accounts', teamID], async () => { return getAccountsByTeamID(teamID)})
 
 
-  let appIsLoading = isTasksLoading;
+  let appIsLoading = isTasksLoading || isAccountsLoading;
   if(appIsLoading){
     return <h1>Loading</h1>
   }
@@ -95,7 +96,7 @@ export default function ManageTasks (props: Iprops) {
       <>
         <h1>Team: { user && user.teams && user.teams[0].name } </h1>
         <div className="m-4 flex flex-col justify-center items-center">
-        <TaskForm task={selectedTask} saveTask={addTodoMutation.mutate} color="hsla(50, 100%, 63%, 1)"/>
+        <TaskForm task={selectedTask} saveTask={addTodoMutation.mutate} users={userData.accounts} color="hsla(50, 100%, 63%, 1)"/>
         <TaskList setSelectedTask={setSelectedTask} onDelete={deleteTask} tasks={Object.values(taskData)} />
         </div>
         </>
